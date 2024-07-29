@@ -18,6 +18,23 @@ router.get("/", (req, res) => {
   });
 });
 
+router.get("/:id", (req, res) => {
+
+  let product = products.find((item) => item.id === +req.params.id);
+  if (!product) {
+    return res.status(404).json({
+      msg: "Product not found",
+      variant: "error",
+      payload: null,
+    });
+  }
+  res.status(200).json({
+    msg: "Product successfully found",
+    variant: "success",
+    payload: product,
+  });
+});
+
 router.post("/", (req, res) => {
   const { title, category, price, url } = req.body;
   if (products.find((item) => item.title === title)) {

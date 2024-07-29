@@ -18,6 +18,23 @@ router.get("/", (req, res) => {
   });
 });
 
+router.get("/:id", (req, res) => {
+  let user = users.find((item) => item.id === +req.params.id);
+  if (!user) {
+    return res.status(404).json({
+      msg: "User not found",
+      variant: "error",
+      payload: null,
+    });
+  }
+  res.status(200).json({
+    msg: "User successfully found",
+    variant: "success",
+    payload: user,
+  });
+});
+
+
 router.post("/", (req, res) => {
   const { fname, username, password } = req.body;
   if (users.find((item) => item.username === username)) {
